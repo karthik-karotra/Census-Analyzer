@@ -1,20 +1,22 @@
 package censusanalyser;
 
-public class CensusAnalyserException extends Exception {
+public class CensusAnalyserException extends RuntimeException {
 
-    enum ExceptionType {
-        CENSUS_FILE_PROBLEM
-    }
 
-    ExceptionType type;
+        enum ExceptionType {
+            CENSUS_FILE_PROBLEM,UNABLE_TO_PASS ;
+        }
 
-    public CensusAnalyserException(String message, ExceptionType type) {
-        super(message);
-        this.type = type;
-    }
+        ExceptionType type;
 
-    public CensusAnalyserException(String message, ExceptionType type, Throwable cause) {
-        super(message, cause);
-        this.type = type;
-    }
+        public CensusAnalyserException(String message, ExceptionType type) {
+            super(message);
+            this.type = type;
+        }
+
+        public CensusAnalyserException(String message, ExceptionType type, Throwable cause) {
+            super(message, cause);
+            this.type = type;
+        }
+
 }
