@@ -8,21 +8,21 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
+    Iterator<IndiaCensusCSV> censusCSVIterator =null;
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
-        try {
-            Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
+        try( Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
+
             CsvToBeanBuilder<IndiaCensusCSV> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
             csvToBeanBuilder.withType(IndiaCensusCSV.class);
             csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
             CsvToBean<IndiaCensusCSV> csvToBean = csvToBeanBuilder.build();
-            Iterator<IndiaCensusCSV> censusCSVIterator = csvToBean.iterator();;
-            int numOfRecords = 0;
-            while (censusCSVIterator.hasNext()) {
-                numOfRecords++;
-                IndiaCensusCSV censusData = censusCSVIterator.next();
-            }
+            censusCSVIterator = csvToBean.iterator();;
+
+            Iterable<IndiaCensusCSV> csvIterable=() -> censusCSVIterator;
+            int numOfRecords=(int) StreamSupport.stream(csvIterable.spliterator(),false).count();
             return numOfRecords;
         } catch (IOException e) {
             throw new CensusAnalyserException(e.getMessage(),
