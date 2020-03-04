@@ -4,7 +4,7 @@ public class CensusAnalyserException extends RuntimeException {
 
 
         enum ExceptionType {
-            CENSUS_FILE_PROBLEM,UNABLE_TO_PASS ;
+            CENSUS_FILE_PROBLEM,UNABLE_TO_PASS, NO_CENSUS_DATA;
         }
 
         ExceptionType type;
