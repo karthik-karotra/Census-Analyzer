@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
+    public enum Country {INDIA,US;
+    }
     List<CensusDTO> censusList=null;
     Map<String, CensusDTO> censusCSVMap= null;
 
@@ -17,34 +19,11 @@ public class CensusAnalyser {
         this.censusCSVMap =  new HashMap<>();
     }
 
-    public int loadIndiaCensusData(String... csvFilePath)  {
-        censusCSVMap=new CensusLoader().loadCensusdata(IndiaCensusCSV.class,csvFilePath);
+    public int loadCensusData(Country country,String... csvFilePath)  {
+        censusCSVMap=new CensusLoader().loadCensusdata(country,csvFilePath);
          return censusCSVMap.size();
 
     }
-    public int loadUSCensusData(String... csvFilePath) {
-        censusCSVMap=new CensusLoader().loadCensusdata(USCensusCSV.class,csvFilePath);
-        return censusCSVMap.size();
-    }
-
-
-  /*  public int loadIndianStateCode(String indiaStateCsvFilePath)  {
-        try (Reader reader = Files.newBufferedReader(Paths.get(indiaStateCsvFilePath))) {
-            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<IndianStateCodeCSV> censusCSVIterator = csvBuilder.getCSVFileIterator(reader,IndianStateCodeCSV.class);
-            Iterable<IndianStateCodeCSV> csvIterable = () -> censusCSVIterator;
-            StreamSupport.stream(csvIterable.spliterator(),false)
-                    .filter(csvState -> censusCSVMap.get(csvState.state)!=null)
-                    .forEach(csvState -> censusCSVMap.get(csvState.state).stateCode=csvState.state);
-            return censusCSVMap.size();
-        } catch (IOException e) {
-            throw new CensusAnalyserException(e.getMessage(),
-                    CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
-        }
-    }*/
-
-
-
 
     private<E> int getCount(Iterator<E> iterator) {
         Iterable<E> csvIterable=() -> iterator;
