@@ -17,18 +17,18 @@ public class CensusAnalyser {
         this.censusCSVMap =  new HashMap<>();
     }
 
-    public int loadIndiaCensusData(String csvFilePath)  {
-        censusCSVMap=new CensusLoader().loadCensusdata(csvFilePath,IndiaCensusCSV.class);
+    public int loadIndiaCensusData(String... csvFilePath)  {
+        censusCSVMap=new CensusLoader().loadCensusdata(IndiaCensusCSV.class,csvFilePath);
          return censusCSVMap.size();
 
     }
-    public int loadUSCensusData(String csvFilePath) {
-        censusCSVMap=new CensusLoader().loadCensusdata(csvFilePath,USCensusCSV.class);
+    public int loadUSCensusData(String... csvFilePath) {
+        censusCSVMap=new CensusLoader().loadCensusdata(USCensusCSV.class,csvFilePath);
         return censusCSVMap.size();
     }
 
 
-    public int loadIndianStateCode(String indiaStateCsvFilePath)  {
+  /*  public int loadIndianStateCode(String indiaStateCsvFilePath)  {
         try (Reader reader = Files.newBufferedReader(Paths.get(indiaStateCsvFilePath))) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
             Iterator<IndianStateCodeCSV> censusCSVIterator = csvBuilder.getCSVFileIterator(reader,IndianStateCodeCSV.class);
@@ -41,7 +41,7 @@ public class CensusAnalyser {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }
-    }
+    }*/
 
 
 
