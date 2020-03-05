@@ -18,31 +18,15 @@ public class CensusAnalyser {
     }
 
     public int loadIndiaCensusData(String csvFilePath)  {
-        return loadCensusdata(csvFilePath,IndiaCensusCSV.class);
+        censusCSVMap=new CensusLoader().loadCensusdata(csvFilePath,IndiaCensusCSV.class);
+         return censusCSVMap.size();
+
+    }
+    public int loadUSCensusData(String csvFilePath) {
+        censusCSVMap=new CensusLoader().loadCensusdata(csvFilePath,USCensusCSV.class);
+        return censusCSVMap.size();
     }
 
-    private<E> int loadCensusdata(String csvFilePath, Class<E> censusCSVClass) {
-        try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-            Iterator<E> censusCSVIterator = csvBuilder.getCSVFileIterator(reader,censusCSVClass);
-            Iterable<E> csvIterable = () -> censusCSVIterator;
-            if(censusCSVClass.getName().equals("censusanalyser.IndiaCensusCSV")) {
-                StreamSupport.stream(csvIterable.spliterator(), false)
-                        .map(IndiaCensusCSV.class::cast)
-                        .forEach(censusCSV -> censusCSVMap.put(censusCSV.state, new CensusDTO(censusCSV)));
-            }
-            else if(censusCSVClass.getName().equals("censusanalyser.USCensusCSV")) {
-                StreamSupport.stream(csvIterable.spliterator(), false)
-                        .map(USCensusCSV.class::cast)
-                        .forEach(censusCSV -> censusCSVMap.put(censusCSV.state, new CensusDTO(censusCSV)));
-
-            }
-            return censusCSVMap.size();
-        } catch (IOException e) {
-            throw new CensusAnalyserException(e.getMessage(),
-                    CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
-        }
-    }
 
     public int loadIndianStateCode(String indiaStateCsvFilePath)  {
         try (Reader reader = Files.newBufferedReader(Paths.get(indiaStateCsvFilePath))) {
@@ -60,9 +44,7 @@ public class CensusAnalyser {
     }
 
 
-    public int loadUSCensusData(String csvFilePath) {
-        return loadCensusdata(csvFilePath,USCensusCSV.class);
-    }
+
 
     private<E> int getCount(Iterator<E> iterator) {
         Iterable<E> csvIterable=() -> iterator;
