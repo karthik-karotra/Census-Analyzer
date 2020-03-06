@@ -9,8 +9,15 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.StreamSupport;
 
-public class CensusLoader {
+public class IndiaCensusAdapter extends CensusAdapter {
     Map<String, CensusDTO> censusCSVMap=  new HashMap<>();
+
+    @Override
+    public Map<String, CensusDTO> loadCensusdata(String... csvFilePath) {
+        Map<String,CensusDTO> censusCSVMap = super.loadCensusdata(IndiaCensusCSV.class,csvFilePath[0]);
+        this.loadIndianStateCode(censusCSVMap,csvFilePath[1]);
+        return censusCSVMap;
+    }
 
     public Map<String, CensusDTO> loadCensusdata(CensusAnalyser.Country country, String[] csvFilePath) {
         if(country.equals(CensusAnalyser.Country.INDIA))
@@ -61,6 +68,7 @@ public class CensusLoader {
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }
     }
+
 
 
 }

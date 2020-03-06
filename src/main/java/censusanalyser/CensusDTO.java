@@ -9,8 +9,8 @@ public class CensusDTO {
 
     public CensusDTO(IndiaCensusCSV indiaCensusCSV) {
         state=indiaCensusCSV.state;
-        totalArea =indiaCensusCSV.areaInSqKm;
-        populationDensity =indiaCensusCSV.densityPerSqKm;
+        totalArea =indiaCensusCSV.totalArea;
+        populationDensity =indiaCensusCSV.populationDensity;
         population=indiaCensusCSV.population;
 
     }
