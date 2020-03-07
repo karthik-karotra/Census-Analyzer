@@ -1,5 +1,4 @@
 package censusanalyser;
-
 import java.util.Map;
 
 public  class USCensusAdapter extends CensusAdapter{

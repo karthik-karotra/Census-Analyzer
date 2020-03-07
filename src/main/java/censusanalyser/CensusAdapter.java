@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.stream.StreamSupport;
 
 public abstract class CensusAdapter {
+
     public abstract Map<String, CensusDTO> loadCensusdata(String... csvFilePath);
 
     public   <E> Map<String,CensusDTO>loadCensusdata(Class<E> censusCSVClass, String csvFilePath) {
@@ -29,9 +30,7 @@ public abstract class CensusAdapter {
                         .forEach(censusCSV -> censusCSVMap.put(censusCSV.state, new CensusDTO(censusCSV)));
 
             }
-
             return censusCSVMap;
-
         } catch (IOException e) {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);

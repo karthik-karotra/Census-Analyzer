@@ -2,9 +2,8 @@ package censusanalyser;
 
 public class CensusAnalyserException extends RuntimeException {
 
-
         enum ExceptionType {
-            CENSUS_FILE_PROBLEM,UNABLE_TO_PASS, NO_CENSUS_DATA, INVALID_COUNTRY;
+            CENSUS_FILE_PROBLEM, NO_CENSUS_DATA, INVALID_COUNTRY;
         }
 
         ExceptionType type;
@@ -18,5 +17,4 @@ public class CensusAnalyserException extends RuntimeException {
             super(message, cause);
             this.type = type;
         }
-
 }
